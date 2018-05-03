@@ -185,7 +185,7 @@ public class Network {
 			return false;
 		}
 		; // not all workstations are registered
-		// all verifications succeedeed
+			// all verifications succeedeed
 		return true;
 	}
 
@@ -353,11 +353,7 @@ public class Network {
 						title = document.message_.substring(startPos + 6, endPos);
 					}
 					;
-					report.write("\tAccounting -- author = '");
-					report.write(author);
-					report.write("' -- title = '");
-					report.write(title);
-					report.write("'\n");
+					accountingAuthor(report, author, title);
 					report.write(">>> Postscript job delivered.\n\n");
 					report.flush();
 				} else {
@@ -366,11 +362,7 @@ public class Network {
 						author = document.message_.substring(8, 16);
 					}
 					;
-					report.write("\tAccounting -- author = '");
-					report.write(author);
-					report.write("' -- title = '");
-					report.write(title);
-					report.write("'\n");
+					accountingAuthor(report, author, title);
 					report.write(">>> ASCII Print job delivered.\n\n");
 					report.flush();
 				}
@@ -390,6 +382,23 @@ public class Network {
 			;
 			return false;
 		}
+	}
+
+	/**
+	 * Método accountingAuthor. Resultado de extraer el código duplicado el método
+	 * printDocument.
+	 * 
+	 * @param report
+	 * @param author
+	 * @param title
+	 * @throws IOException
+	 */
+	private void accountingAuthor(Writer report, String author, String title) throws IOException {
+		report.write("\tAccounting -- author = '");
+		report.write(author);
+		report.write("' -- title = '");
+		report.write(title);
+		report.write("'\n");
 	}
 
 	/**
