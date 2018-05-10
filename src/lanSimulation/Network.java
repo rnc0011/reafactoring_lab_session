@@ -220,7 +220,7 @@ public class Network {
 				report.write("\tNode '");
 				report.write(currentNode.name_);
 				report.write("' accepts broadcase packet.\n");
-				currentNode.logging(report, this);
+				currentNode.logging(report);
 			} catch (IOException exc) {
 				// just ignore
 			}
@@ -283,7 +283,7 @@ public class Network {
 		startNode = (Node) workstations_.get(workstation);
 
 		try {
-			startNode.logging(report, this);
+			startNode.logging(report);
 		} catch (IOException exc) {
 			// just ignore
 		}
@@ -291,7 +291,7 @@ public class Network {
 		currentNode = startNode.nextNode_;
 		while ((!packet.destination_.equals(currentNode.name_)) & (!packet.origin_.equals(currentNode.name_))) {
 			try {
-				currentNode.logging(report, this);
+				currentNode.logging(report);
 			} catch (IOException exc) {
 				// just ignore
 			}
