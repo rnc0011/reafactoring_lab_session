@@ -97,5 +97,14 @@ public class Node {
 		report.write("' passes packet on.\n");
 		report.flush();
 	}
+	
+	/**
+	 * Método getNextNode. Devuelve el siguiente Nodo
+	 * 
+	 * @return nextNode_
+	 */
+	public Node getNextNode(){
+		return this.nextNode_;
+	}
 
 }

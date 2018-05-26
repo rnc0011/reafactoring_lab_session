@@ -226,7 +226,7 @@ public class Network {
 			}
 			;
 			currentNode = currentNode.nextNode_;
-		} while (!atDestination(currentNode, packet));
+		} while (!packet.destination_.equals(currentNode.name_));
 
 		try {
 			report.write(">>> Broadcast travelled whole token ring.\n\n");
@@ -235,10 +235,6 @@ public class Network {
 		}
 		;
 		return true;
-	}
-
-	private boolean atDestination(Node currentNode, Packet packet) {
-		return packet.destination_.equals(currentNode.name_);
 	}
 
 	/**
@@ -293,7 +289,7 @@ public class Network {
 		}
 		;
 		currentNode = startNode.nextNode_;
-		while ((!atDestination(currentNode, packet)) & (!packet.origin_.equals(currentNode.name_))) {
+		while ((!packet.destination_.equals(currentNode.name_)) & (!packet.origin_.equals(currentNode.name_))) {
 			try {
 				currentNode.logging(report);
 			} catch (IOException exc) {
@@ -304,7 +300,7 @@ public class Network {
 		}
 		;
 
-		if (atDestination(currentNode, packet)) {
+		if (packet.destination_.equals(currentNode.name_)) {
 			result = packet.printDocument(currentNode, report);
 		} else {
 			try {
@@ -366,7 +362,7 @@ public class Network {
 			}
 			;
 			buf.append(" -> ");
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.getNextNode();
 		} while (currentNode != firstNode_);
 		buf.append(" ... ");
 	}
@@ -408,7 +404,7 @@ public class Network {
 			}
 			;
 			buf.append(" </LI>");
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.getNextNode();
 		} while (currentNode != firstNode_);
 		buf.append("\n\t<LI>...</LI>\n</UL>\n\n</BODY>\n</HTML>\n");
 	}
@@ -448,7 +444,7 @@ public class Network {
 				break;
 			}
 			;
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.getNextNode();
 		} while (currentNode != firstNode_);
 		buf.append("\n</network>");
 	}
