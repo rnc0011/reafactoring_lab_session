@@ -19,6 +19,9 @@
  */
 package lanSimulation.internals;
 
+import java.io.IOException;
+import java.io.Writer;
+
 /**
  * A <em>Packet</em> represents a unit of information to be sent over the Local
  * Area Network (LAN).
@@ -55,4 +58,81 @@ public class Packet {
 		destination_ = destination;
 	}
 
+	public boolean printDocument(Node printer, Writer report) {
+		String author = "Unknown";
+		String title = "Untitled";
+		int startPos = 0, endPos = 0;
+	
+		if (printer.type_ == Node.PRINTER) {
+			try {
+				if (message_.startsWith("!PS")) {
+					startPos = message_.indexOf("author:");
+					if (startPos >= 0) {
+						endPos = message_.indexOf(".", startPos + 7);
+						if (endPos < 0) {
+							endPos = message_.length();
+						}
+						;
+						author = message_.substring(startPos + 7, endPos);
+					}
+					;
+					startPos = message_.indexOf("title:");
+					if (startPos >= 0) {
+						endPos = message_.indexOf(".", startPos + 6);
+						if (endPos < 0) {
+							endPos = message_.length();
+						}
+						;
+						title = message_.substring(startPos + 6, endPos);
+					}
+					;
+					accountingAuthor(report, author, title);
+					report.write(">>> Postscript job delivered.\n\n");
+					report.flush();
+				} else {
+					title = "ASCII DOCUMENT";
+					if (message_.length() >= 16) {
+						author = message_.substring(8, 16);
+					}
+					;
+					accountingAuthor(report, author, title);
+					report.write(">>> ASCII Print job delivered.\n\n");
+					report.flush();
+				}
+				;
+			} catch (IOException exc) {
+				// just ignore
+			}
+			;
+			return true;
+		} else {
+			try {
+				report.write(">>> Destinition is not a printer, print job cancelled.\n\n");
+				report.flush();
+			} catch (IOException exc) {
+				// just ignore
+			}
+			;
+			return false;
+		}
+	}
+
+	/**
+	 * Método accountingAuthor. Resultado de extraer el código duplicado el método
+	 * printDocument.
+	 * 
+	 * @param report
+	 * @param author
+	 * @param title
+	 * @throws IOException
+	 */
+	private void accountingAuthor(Writer report, String author, String title) throws IOException {
+		report.write("\tAccounting -- author = '");
+		report.write(author);
+		report.write("' -- title = '");
+		report.write(title);
+		report.write("'\n");
+	}
+	
 }
+
