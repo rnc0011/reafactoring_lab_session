@@ -195,7 +195,7 @@ public class LANTests extends TestCase {
 		Node node;
 
 		node = new Node(Node.NODE, "n");
-		assertEquals("type_", node.type_, Node.NODE);
+		assertEquals("type_", node.getClass(), Node.class);
 		assertEquals("name_", node.name_, "n");
 		assertEquals("nextNode_", node.nextNode_, null);
 		node.nextNode_ = node;
