@@ -13,13 +13,24 @@ Para un documento ASCII el autor esta en los caracteres del 10 al 30 y el título
 Para documentos postcript, el autor y el título del documento debería ser encontrados escaneando los caracteres en el documento, buscando las palabras clave "author:" hasta"."
 * VERSION 1.4: BROADCAST PACKET
 Introduce un nuevo tipo de paquete "BROADCAST" que debería ser aceptado por todos los nodos en la red. 
+
+
+
+Con "Versión terminada 1.4" asumimos que tenemos que considerar los cambios de los siguientes requisitos:
+
 * version 2.0: READ FROM FILE
 Lee la configuración de la red y los trabajos que deben ser impresos desde un fichero en formato XML.
+-- Podríamos crear un constructor nuevo para la clase Network en el que pasamos como parámetro el fichero XML y nos apoyaríamos en un método auxiliar para parsear el fichero.
+
 * version 2.1: GATEWAY NODE
 Introduce un nuevo nodo "gateway", el cuál pueda reconocer todas las direcciones en su subred actual mirando los 3 caracteres de la dirección.
 Si un paquete pasa a través del gateway y la dirección no esta en la subred actual, el mensaje es reenviado a través del gateway.  
+-- Añadiríamos otra subclase de Nodo llamada Gateway.
+
 * version 2.1: COMPILE LIST OF NODES
 Usando el BROADCAST PACKET, el gateway envia periodicamente una petición a todos los nodos para que contesten con su nombre. Cada gateway puede verificar si los nodos tienen el prefijo correcto.
+-- No tenemos claro lo que se pide en este requisito.
+
 * version 3.0: GUI
 El sistema debería tener una GUI que debería mostrar una animación del sistema ejecutándose.
- 
+-- Podríamos añadir un paquete nuevo con una clase encargada de los gráficos y una interfaz(java) encargada de la comunicación con el resto de clases.
